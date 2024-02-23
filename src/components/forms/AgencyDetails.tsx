@@ -16,7 +16,16 @@ import {
 	CardHeader,
 	CardTitle,
 } from "../ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "../ui/form";
+import { FileUpload } from "../global/FileUpload";
+import { Input } from "../ui/input";
 
 interface AgencyDetailsProps {
 	data?: Partial<Agency>;
@@ -91,12 +100,35 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 									<FormItem>
 										<FormLabel>Agency Logo</FormLabel>
 
-                                        <FormControl >
-<FileUpload></FileUpload>
-                                        </FormControl>
+										<FormControl>
+											<FileUpload
+												apiEndpoint="agencyLogo"
+												onChange={field.onChange}
+												value={field.value}
+											/>
+										</FormControl>
+
+										<FormMessage />
 									</FormItem>
 								)}
 							/>
+
+							<div className="flex md:flex-row gap-4">
+								<FormField
+									disabled={isLoading}
+									control={form.control}
+									name="name"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Agency Name</FormLabel>
+
+											<FormControl>
+												<Input placeholder="Your agency name" {...field} />
+											</FormControl>
+										</FormItem>
+									)}
+								/>
+							</div>
 						</form>
 					</Form>
 				</CardContent>
