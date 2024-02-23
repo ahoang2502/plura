@@ -45,7 +45,7 @@ export const FileUpload = ({
 				)}
 
 				<Button variant="ghost" type="button" onClick={() => onChange("")}>
-					<X className="h-4 w-4 " />
+					<X className="h-4 w-4 mr-1" />
 					Remove Logo
 				</Button>
 			</div>

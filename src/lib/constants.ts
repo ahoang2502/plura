@@ -27,6 +27,7 @@ import Tune from "@/components/icons/tune";
 import Video from "@/components/icons/video_recorder";
 import Wallet from "@/components/icons/wallet";
 import Warning from "@/components/icons/warning";
+
 export const pricingCards = [
 	{
 		title: "Starter",
