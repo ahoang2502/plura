@@ -1,19 +1,22 @@
 "use client";
 
 import {
+	Agency,
 	AgencySidebarOption,
 	SubAccount,
 	SubAccountSidebarOption,
 } from "@prisma/client";
-import React, { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
-import { ChevronsUpDown, Compass, Menu } from "lucide-react";
 import clsx from "clsx";
+import { ChevronsUpDown, Compass, Menu, PlusCircleIcon } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
-import { Button } from "../ui/button";
+import { useModal } from "@/providers/modal-providers";
+import Link from "next/link";
+import { SubAccountDetails } from "../forms/SubAccountDetails";
+import { CustomModal } from "../global/CustomModal";
 import { AspectRatio } from "../ui/aspect-ratio";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
 import {
 	Command,
 	CommandEmpty,
@@ -22,7 +25,10 @@ import {
 	CommandItem,
 	CommandList,
 } from "../ui/command";
-import Link from "next/link";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Separator } from "../ui/separator";
+import { icons } from "@/lib/constants";
 
 interface MenuOptionsProps {
 	defaultOpen?: boolean;
@@ -45,6 +51,8 @@ export const MenuOptions = ({
 }: MenuOptionsProps) => {
 	const [isMounted, setIsMounted] = useState(false);
 
+	const { setOpen } = useModal();
+
 	const openState = useMemo(
 		() => (defaultOpen ? { open: true } : {}),
 		[defaultOpen]
@@ -57,11 +65,7 @@ export const MenuOptions = ({
 	if (!isMounted) return null;
 
 	return (
-		<Sheet
-			modal={false}
-			// {...openState}
-			open={true}
-		>
+		<Sheet modal={false} {...openState}>
 			<SheetTrigger
 				className="absolute left-4 top-4 z-[100] md:!hidden flex"
 				asChild
@@ -99,7 +103,7 @@ export const MenuOptions = ({
 								variant="ghost"
 							>
 								<div className="flex items-center text-left gap-2">
-									<Compass className="" />
+									<Compass />
 									<div className="flex flex-col ">
 										{details.name}
 										<span className="text-muted-foreground">
@@ -114,10 +118,11 @@ export const MenuOptions = ({
 							</Button>
 						</PopoverTrigger>
 
+						{/* Search */}
 						<PopoverContent className="w-80 h-80 mt-4 z-[100]">
 							<Command className="rounded-lg ">
 								<CommandInput placeholder="Search accounts..." />
-								<CommandList className="pb-16 ">
+								<CommandList className="pb-16 no-scrollbar">
 									<CommandEmpty>No results found.</CommandEmpty>
 
 									{(user?.role === "AGENCY_OWNER" ||
@@ -228,9 +233,77 @@ export const MenuOptions = ({
 											: "No accounts"}
 									</CommandGroup>
 								</CommandList>
+
+								{/* Create Subaccount Modal */}
+								{(user?.role === "AGENCY_OWNER" ||
+									user?.role === "AGENCY_ADMIN") && (
+									<SheetClose>
+										<Button
+											className="w-full flex gap-2"
+											onClick={() => {
+												setOpen(
+													<CustomModal
+														title="Create a SubAccount"
+														subheading="You can swicth between your agency account and the subaccount from the sidebar"
+													>
+														<SubAccountDetails
+															agencyDetails={user?.Agency as Agency}
+															userId={user?.id as string}
+															userName={user?.name}
+														/>
+													</CustomModal>
+												);
+											}}
+										>
+											<PlusCircleIcon size={15} />
+											Create sub-account
+										</Button>
+									</SheetClose>
+								)}
 							</Command>
 						</PopoverContent>
 					</Popover>
+
+					<p className="text-muted-foreground text-xs mb-2 ">MENU LINKS</p>
+
+					<Separator className="mb-4" />
+					<nav className="relative">
+						<Command className="rounded-lg overflow-visible bg-transparent">
+							<CommandInput placeholder="Search..." />
+
+							<CommandList className="pb-16 overflow-visible py-4">
+								<CommandEmpty>No results found.</CommandEmpty>
+
+								<CommandGroup className="overflow-visible">
+									{sidebarOpt.map((sidebarOptions) => {
+										let val;
+
+										const result = icons.find(
+											(icon) => icon.value === sidebarOptions.icon
+										);
+										if (result) {
+											val = <result.path />;
+										}
+
+										return (
+											<CommandItem
+												key={sidebarOptions.id}
+												className="md:w-[320px] w-full"
+											>
+												<Link
+													href={sidebarOptions.link}
+													className="flex items-center gap-2 hover:bg-transparent rounded-md transition-all md:w-full w-[320px]"
+												>
+													{val}
+													<span>{sidebarOptions.name}</span>
+												</Link>
+											</CommandItem>
+										);
+									})}
+								</CommandGroup>
+							</CommandList>
+						</Command>
+					</nav>
 				</div>
 			</SheetContent>
 		</Sheet>
