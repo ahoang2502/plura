@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Bell } from "lucide-react";
 import { Role } from "@prisma/client";
@@ -16,6 +18,7 @@ import {
 import { Card } from "../ui/card";
 import { Switch } from "../ui/switch";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { ModeToggle } from "./ModeToggle";
 
 interface InfoBarProps {
 	notifications: NotificationWithUser | [];
@@ -60,8 +63,8 @@ export const InfoBar = ({
 
 					<Sheet>
 						<SheetTrigger>
-							<div className="rounded-full w-8 h-8 bg-primary flex items-center justify-center text-white">
-								<Bell size={17} />
+							<div className="rounded-full w-9 h-9 bg-primary flex items-center justify-center text-white">
+								<Bell size={18} />
 							</div>
 						</SheetTrigger>
 
@@ -124,6 +127,8 @@ export const InfoBar = ({
 							)}
 						</SheetContent>
 					</Sheet>
+
+					<ModeToggle />
 				</div>
 			</div>
 		</>

@@ -199,24 +199,26 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 	return (
 		<AlertDialog>
 			<Card className="w-full">
-				<CardHeader>
+				<CardHeader className="space-y-2">
 					<CardTitle>Agency Information</CardTitle>
 					<CardDescription>
-						Lets create an agency for you business. You can edit agency settings
-						later from the agency settings tab.
+						Let&apos;s create an agency for you business. You can edit agency
+						settings later from the agency settings tab.
 					</CardDescription>
 				</CardHeader>
 
 				<CardContent>
 					<Form {...form}>
-						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
+						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 							<FormField
 								disabled={isLoading}
 								control={form.control}
 								name="agencyLogo"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Agency Logo</FormLabel>
+										<FormLabel className="text-xs font-bold">
+											Agency Logo
+										</FormLabel>
 
 										<FormControl>
 											<FileUpload
@@ -239,7 +241,9 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 									name="name"
 									render={({ field }) => (
 										<FormItem className="flex-1">
-											<FormLabel>Agency Name</FormLabel>
+											<FormLabel className="text-xs font-bold">
+												Agency Name
+											</FormLabel>
 
 											<FormControl>
 												<Input placeholder="Your agency name" {...field} />
@@ -256,7 +260,9 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 									name="companyEmail"
 									render={({ field }) => (
 										<FormItem className="flex-1">
-											<FormLabel>Agency Email</FormLabel>
+											<FormLabel className="text-xs font-bold">
+												Agency Email
+											</FormLabel>
 
 											<FormControl>
 												<Input placeholder="Email" {...field} />
@@ -275,7 +281,9 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 									name="companyPhone"
 									render={({ field }) => (
 										<FormItem className="flex-1">
-											<FormLabel>Agency Phone Number</FormLabel>
+											<FormLabel className="text-xs font-bold">
+												Agency Phone Number
+											</FormLabel>
 
 											<FormControl>
 												<Input placeholder="Phone number" {...field} />
@@ -295,7 +303,9 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 									return (
 										<FormItem className="flex flex-row items-center justify-between rounded-lg border gap-4 p-4">
 											<div>
-												<FormLabel>Whitelabel Agency</FormLabel>
+												<FormLabel className="text-xs font-bold">
+													Whitelabel Agency
+												</FormLabel>
 												<FormDescription>
 													Turning on whilelabel mode will show your agency logo
 													to all sub accounts by default. You can overwrite this
@@ -321,7 +331,7 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 								name="address"
 								render={({ field }) => (
 									<FormItem className="flex-1">
-										<FormLabel>Address</FormLabel>
+										<FormLabel className="text-xs font-bold">Address</FormLabel>
 										<FormControl>
 											<Input placeholder="123 st..." {...field} />
 										</FormControl>
@@ -338,7 +348,7 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 									name="city"
 									render={({ field }) => (
 										<FormItem className="flex-1">
-											<FormLabel>City</FormLabel>
+											<FormLabel className="text-xs font-bold">City</FormLabel>
 											<FormControl>
 												<Input placeholder="City" {...field} />
 											</FormControl>
@@ -353,7 +363,7 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 									name="state"
 									render={({ field }) => (
 										<FormItem className="flex-1">
-											<FormLabel>State</FormLabel>
+											<FormLabel className="text-xs font-bold">State</FormLabel>
 											<FormControl>
 												<Input placeholder="State" {...field} />
 											</FormControl>
@@ -368,7 +378,9 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 									name="zipCode"
 									render={({ field }) => (
 										<FormItem className="flex-1">
-											<FormLabel>Zipcode</FormLabel>
+											<FormLabel className="text-xs font-bold">
+												Zipcode
+											</FormLabel>
 											<FormControl>
 												<Input placeholder="Zip code" {...field} />
 											</FormControl>
@@ -385,7 +397,7 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 								name="country"
 								render={({ field }) => (
 									<FormItem className="flex-1">
-										<FormLabel>Country</FormLabel>
+										<FormLabel className="text-xs font-bold">Country</FormLabel>
 										<FormControl>
 											<Input placeholder="Country" {...field} />
 										</FormControl>
@@ -397,7 +409,9 @@ export const AgencyDetails = ({ data }: AgencyDetailsProps) => {
 							{/* Sub-account Goal */}
 							{data?.id && (
 								<div className="flex flex-col gap-3">
-									<FormLabel className="mt-1">Create A Goal</FormLabel>
+									<FormLabel className="mt-1 font-bold text-xs">
+										Create A Goal
+									</FormLabel>
 									<FormDescription>
 										✨ Create a goal for your agency. As your business grows
 										your goals grow too so dont forget to set the bar higher!
