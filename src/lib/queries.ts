@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 import { db } from "./db";
 import { v4 } from "uuid";
+import { CreateMediaType } from "./types";
 
 export const getAuthUserDetails = async () => {
 	const user = await currentUser();
@@ -527,6 +528,34 @@ export const sendInvitation = async (
 		console.log(error);
 		throw error;
 	}
+
+	return response;
+};
+
+export const getMedia = async (subaccountId: string) => {
+	const mediafiles = await db.subAccount.findUnique({
+		where: {
+			id: subaccountId,
+		},
+		include: {
+			Media: true,
+		},
+	});
+
+	return mediafiles;
+};
+
+export const createMedia = async (
+	subaccountId: string,
+	mediaFile: CreateMediaType
+) => {
+	const response = await db.media.create({
+		data: {
+			link: mediaFile.link,
+			name: mediaFile.name,
+			subAccountId: subaccountId,
+		},
+	});
 
 	return response;
 };
