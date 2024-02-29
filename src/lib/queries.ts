@@ -566,6 +566,10 @@ export const deleteMedia = async (mediaId: string) => {
 			id: mediaId,
 		},
 	});
-	
+
 	return response;
 };
+
+export const getPipelineDetails =async (pipelineId:string) =>{
+	
+}
