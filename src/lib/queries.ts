@@ -559,3 +559,13 @@ export const createMedia = async (
 
 	return response;
 };
+
+export const deleteMedia = async (mediaId: string) => {
+	const response = await db.media.delete({
+		where: {
+			id: mediaId,
+		},
+	});
+	
+	return response;
+};
