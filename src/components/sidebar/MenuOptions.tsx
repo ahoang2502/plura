@@ -286,7 +286,7 @@ export const MenuOptions = ({
 										}
 
 										return (
-											<CommandItem
+											<CommandItem 
 												key={sidebarOptions.id}
 												className="md:w-[320px] w-full"
 											>

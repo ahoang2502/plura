@@ -59,6 +59,7 @@ export const Sidebar = async ({ id, type }: SidebarProps) => {
 				user={user}
 				id={id}
 			/>
+			
 			<MenuOptions
 				subAccounts={subaccounts}
 				sidebarLogo={sidebarLogo}

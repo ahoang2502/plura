@@ -7,4 +7,3 @@ const PipelinesLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default PipelinesLayout;
-d

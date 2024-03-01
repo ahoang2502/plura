@@ -1,6 +1,16 @@
-import { Notification, Prisma, Role } from "@prisma/client";
+import {
+	Contact,
+	Lane,
+	Notification,
+	Prisma,
+	Role,
+	Tag,
+	Ticket,
+	User,
+} from "@prisma/client";
+import { z } from "zod";
 
-import { getAuthUserDetails, getMedia, getUserPermissions } from "./queries";
+import { getAuthUserDetails, getMedia, getPipelineDetails, getUserPermissions } from "./queries";
 import { db } from "./db";
 
 export type NotificationWithUser =
@@ -45,3 +55,28 @@ const __getUsersWithAgencySubAccountPermissionsSidebarOptions = async (
 export type GetMediaFiles = Prisma.PromiseReturnType<typeof getMedia>;
 
 export type CreateMediaType = Prisma.MediaCreateWithoutSubaccountInput;
+
+export type LaneDetail = Lane & {
+	Tickets: TicketAndTags[];
+};
+
+export type TicketAndTags = Ticket & {
+	Tags: Tag[];
+	Assigned: User | null;
+	Customer: Contact | null;
+};
+
+export const CreatePipelineFormSchema = z.object({
+	name: z.string().min(1),
+});
+
+export const CreateFunnelFormSchema = z.object({
+	name: z.string().min(1),
+	description: z.string(),
+	subDomainName: z.string().optional(),
+	favicon: z.string().optional(),
+});
+
+export type PipelineDetailsWithLanesCardsTagsTickets = Prisma.PromiseReturnType<
+	typeof getPipelineDetails
+>;
