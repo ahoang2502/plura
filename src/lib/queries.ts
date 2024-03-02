@@ -676,6 +676,30 @@ export const updateTicketsOrder = async (tickets: Ticket[]) => {
 	}
 };
 
+export const upsertLane = async (lane: Prisma.LaneUncheckedCreateInput) => {
+	let order: number;
+
+	if (!lane.order) {
+		const lanes = await db.lane.findMany({
+			where: {
+				pipelineId: lane.pipelineId,
+			},
+		});
+
+		order = lanes.length;
+	} else {
+		order = lane.order;
+	}
+
+	const response = await db.lane.upsert({
+		where: { id: lane.id || v4() },
+		update: lane,
+		create: { ...lane, order },
+	});
+
+	return response;
+};
+
 export const upsertFunnel = async (
 	subaccountId: string,
 	funnel: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string },
@@ -693,3 +717,4 @@ export const upsertFunnel = async (
 
 	return response;
 };
+
