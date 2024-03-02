@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { CustomModal } from "@/components/global/CustomModal";
 import { CreateLaneForm } from "@/components/forms/CreateLaneForm";
 import { Plus } from "lucide-react";
+import { PipelineLane } from "./PipelineLane";
 
 interface PipelineViewProps {
 	lanes: LaneDetail[];
@@ -62,6 +63,29 @@ export const PipelineView = ({
 						Create lane
 					</Button>
 				</div>
+
+				<Droppable
+					droppableId="lanes"
+					type="lane"
+					direction="horizontal"
+					key="lanes"
+				>
+					{(provided) => (
+						<div
+							className="flex items-center gap-x-2 overflow-scroll"
+							{...provided.droppableProps}
+							ref={provided.innerRef}
+						>
+							<div className="flex mt-4">
+								{allLanes.map((lane, index) => (
+									<PipelineLane key={index} />
+								))}
+
+								{provided.placeholder}
+							</div>
+						</div>
+					)}
+				</Droppable>
 			</div>
 		</DragDropContext>
 	);

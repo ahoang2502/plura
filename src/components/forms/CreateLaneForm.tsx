@@ -1,3 +1,5 @@
+"use client";
+
 import { Lane } from "@prisma/client";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -37,7 +39,7 @@ export const CreateLaneForm = ({
 }: CreateLaneFormProps) => {
 	const { setClose } = useModal();
 	const router = useRouter();
-    
+
 	const form = useForm<z.infer<typeof LaneFormSchema>>({
 		mode: "onChange",
 		resolver: zodResolver(LaneFormSchema),
