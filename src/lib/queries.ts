@@ -748,6 +748,7 @@ export const searchContacts = async (searchTerms: string) => {
 			},
 		},
 	});
+
 	return response;
 };
 
@@ -792,6 +793,16 @@ export const _getTicketsWithAllRelations = async (laneId: string) => {
 			Tags: true,
 		},
 	});
+	return response;
+};
+
+export const deleteTicket = async (ticketId: string) => {
+	const response = await db.ticket.delete({
+		where: {
+			id: ticketId,
+		},
+	});
+
 	return response;
 };
 

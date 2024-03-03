@@ -87,7 +87,7 @@ const AllSubaccountsPage = async ({ params }: AllSubaccountsPageProps) => {
 											<Button
 												size="sm"
 												variant="destructive"
-												className="text-red-600 w-20 hover:bg-red-600 hover:text-white"
+												className="text-red-200 w-20 hover:bg-red-600 hover:text-white"
 											>
 												Delete
 											</Button>

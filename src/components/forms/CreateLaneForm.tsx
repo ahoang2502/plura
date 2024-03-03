@@ -110,7 +110,7 @@ export const CreateLaneForm = ({
 							name="name"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel className="text-xs font-semibold">
+									<FormLabel className="text-xs font-bold">
 										Lane Name
 									</FormLabel>
 

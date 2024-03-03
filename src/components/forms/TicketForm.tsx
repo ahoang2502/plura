@@ -70,7 +70,7 @@ export const TicketForm = ({
 	const [assignedTo, setAssignedTo] = useState(
 		defaultData.ticket?.Assigned?.id || ""
 	);
-    
+
 	const form = useForm<z.infer<typeof TicketFormSchema>>({
 		mode: "onChange",
 		resolver: zodResolver(TicketFormSchema),
@@ -99,6 +99,7 @@ export const TicketForm = ({
 				description: defaultData.ticket?.description || "",
 				value: String(defaultData.ticket?.value || 0),
 			});
+
 			if (defaultData.ticket.customerId)
 				setContact(defaultData.ticket.customerId);
 
@@ -107,6 +108,7 @@ export const TicketForm = ({
 					//@ts-ignore
 					defaultData.ticket?.Customer?.name
 				);
+
 				setContactList(response);
 			};
 			fetchData();
@@ -115,6 +117,7 @@ export const TicketForm = ({
 
 	const onSubmit = async (values: z.infer<typeof TicketFormSchema>) => {
 		if (!laneId) return;
+
 		try {
 			const response = await upsertTicket(
 				{
@@ -154,6 +157,7 @@ export const TicketForm = ({
 			<CardHeader>
 				<CardTitle>Ticket Details</CardTitle>
 			</CardHeader>
+
 			<CardContent>
 				<Form {...form}>
 					<form
@@ -202,12 +206,13 @@ export const TicketForm = ({
 								</FormItem>
 							)}
 						/>
+
 						<h3>Add tags</h3>
-						<TagCreator
+						{/* <TagCreator
 							subAccountId={subaccountId}
 							getSelectedTags={setTags}
 							defaultTags={defaultData.ticket?.Tags || []}
-						/>
+						/> */}
 						<FormLabel>Assigned To Team Member</FormLabel>
 						<Select onValueChange={setAssignedTo} defaultValue={assignedTo}>
 							<SelectTrigger>

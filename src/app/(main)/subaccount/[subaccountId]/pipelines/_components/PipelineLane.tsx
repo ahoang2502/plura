@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Dispatch, SetStateAction, useMemo } from "react";
 import { Edit, MoreVertical, PlusCircleIcon, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -28,6 +30,9 @@ import { useModal } from "@/providers/modal-providers";
 import { CustomModal } from "@/components/global/CustomModal";
 import { CreateLaneForm } from "@/components/forms/CreateLaneForm";
 import { deleteLane, saveActivityLogsNotification } from "@/lib/queries";
+import { TicketForm } from "@/components/forms/TicketForm";
+import { cn } from "@/lib/utils";
+import { PipelineTicket } from "./PipelineTicket";
 
 interface PipelaneLaneProps {
 	setAllTickets: Dispatch<SetStateAction<TicketWithTags>>;
@@ -95,14 +100,16 @@ export const PipelineLane = ({
 	const handleDeleteLane = async () => {
 		try {
 			const response = await deleteLane(laneDetails.id);
+
 			await saveActivityLogsNotification({
 				agencyId: undefined,
 				description: `Deleted a lane | ${response?.name}`,
 				subaccountId,
 			});
+
 			router.refresh();
 		} catch (error) {
-			console.log(error);
+			console.log("🔴 Error deleting lane: ", error);
 		}
 	};
 
@@ -127,6 +134,7 @@ export const PipelineLane = ({
 						left: x,
 					};
 				}
+
 				return (
 					<div
 						{...provided.draggableProps}
@@ -135,13 +143,12 @@ export const PipelineLane = ({
 					>
 						<AlertDialog>
 							<DropdownMenu>
-								<div className="bg-slate-200/30 dark:bg-background/20  h-[700px] w-[300px] px-4 relative rounded-lg overflow-visible flex-shrink-0 ">
+								<div className="bg-slate-200/30 dark:bg-background/20  h-[700px] w-[300px] px-4 relative rounded-lg overflow-visible  flex-shrink-0 ">
 									<div
 										{...provided.dragHandleProps}
 										className=" h-14 backdrop-blur-lg dark:bg-background/40 bg-slate-200/60  absolute top-0 left-0 right-0 z-10 "
 									>
 										<div className="h-full flex items-center p-4 justify-between cursor-grab border-b-[1px] ">
-											{/* {laneDetails.order} */}
 											<div className="flex items-center w-full gap-2">
 												<div
 													className={cn("w-4 h-4 rounded-full")}
@@ -151,10 +158,12 @@ export const PipelineLane = ({
 													{laneDetails.name}
 												</span>
 											</div>
+
 											<div className="flex items-center flex-row">
 												<Badge className="bg-white text-black">
 													{amt.format(laneAmt)}
 												</Badge>
+
 												<DropdownMenuTrigger>
 													<MoreVertical className="text-muted-foreground cursor-pointer" />
 												</DropdownMenuTrigger>
@@ -168,7 +177,7 @@ export const PipelineLane = ({
 										type="ticket"
 									>
 										{(provided) => (
-											<div className=" max-h-[700px] overflow-scroll pt-12 ">
+											<div className=" max-h-[700px] overflow-scroll no-scrollbar pt-12 ">
 												<div
 													{...provided.droppableProps}
 													ref={provided.innerRef}
@@ -192,6 +201,7 @@ export const PipelineLane = ({
 
 									<DropdownMenuContent>
 										<DropdownMenuLabel>Options</DropdownMenuLabel>
+
 										<DropdownMenuSeparator />
 										<AlertDialogTrigger>
 											<DropdownMenuItem className="flex items-center gap-2">
@@ -207,15 +217,18 @@ export const PipelineLane = ({
 											<Edit size={15} />
 											Edit
 										</DropdownMenuItem>
+
 										<DropdownMenuItem
 											className="flex items-center gap-2"
 											onClick={handleCreateTicket}
 										>
 											<PlusCircleIcon size={15} />
-											Create Ticket
+											Create ticket
 										</DropdownMenuItem>
 									</DropdownMenuContent>
 								</div>
+
+								{/* Delete-ticket Modal */}
 								<AlertDialogContent>
 									<AlertDialogHeader>
 										<AlertDialogTitle>

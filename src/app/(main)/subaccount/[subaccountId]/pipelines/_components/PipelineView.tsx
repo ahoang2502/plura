@@ -7,13 +7,14 @@ import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import {
 	LaneDetail,
 	PipelineDetailsWithLanesCardsTagsTickets,
+	TicketAndTags,
 } from "@/lib/types";
 import { useModal } from "@/providers/modal-providers";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { CustomModal } from "@/components/global/CustomModal";
 import { CreateLaneForm } from "@/components/forms/CreateLaneForm";
-import { Plus } from "lucide-react";
+import { Flag, Plus } from "lucide-react";
 import { PipelineLane } from "./PipelineLane";
 
 interface PipelineViewProps {
@@ -34,8 +35,16 @@ export const PipelineView = ({
 	updateTicketsOrder,
 }: PipelineViewProps) => {
 	const router = useRouter();
-	const [allLanes, setAllLanes] = useState<LaneDetail[]>([]);
 	const { setOpen } = useModal();
+	const [allLanes, setAllLanes] = useState<LaneDetail[]>([]);
+
+	const ticketsFromAllLanes: TicketAndTags[] = [];
+	lanes.forEach((item) => {
+		item.Tickets.forEach((i) => {
+			ticketsFromAllLanes.push(i);
+		});
+	});
+	const [allTickets, setAllTickets] = useState(ticketsFromAllLanes);
 
 	useEffect(() => {
 		setAllLanes(lanes);
@@ -72,13 +81,22 @@ export const PipelineView = ({
 				>
 					{(provided) => (
 						<div
-							className="flex items-center gap-x-2 overflow-scroll"
+							className="flex items-center gap-x-2 overflow-scroll no-scrollbar"
 							{...provided.droppableProps}
 							ref={provided.innerRef}
 						>
 							<div className="flex mt-4">
 								{allLanes.map((lane, index) => (
-									<PipelineLane key={index} />
+									<PipelineLane
+										key={index}
+										allTickets={allTickets}
+										setAllTickets={setAllTickets}
+										subaccountId={subaccountId}
+										pipelineId={pipelineId}
+										tickets={lane.Tickets}
+										laneDetails={lane}
+										index={index}
+									/>
 								))}
 
 								{provided.placeholder}
@@ -86,6 +104,18 @@ export const PipelineView = ({
 						</div>
 					)}
 				</Droppable>
+
+				{allLanes.length === 0 && (
+					<div className="flex items-center justify-center w-full flex-col ">
+						<div className="opacity-100">
+							<Flag
+								width="100%"
+								height="100%"
+								className="text-muted-foreground"
+							/>
+						</div>
+					</div>
+				)}
 			</div>
 		</DragDropContext>
 	);
