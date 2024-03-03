@@ -214,12 +214,14 @@ export const PipelineTicket = ({
 													{!ticket.assignedUserId && <User2 size={14} />}
 												</AvatarFallback>
 											</Avatar>
+
 											<div className="flex flex-col justify-center">
 												<span className="text-sm text-muted-foreground">
 													{ticket.assignedUserId
 														? "Assigned to"
 														: "Not Assigned"}
 												</span>
+
 												{ticket.assignedUserId && (
 													<span className="text-xs w-28  overflow-ellipsis overflow-hidden whitespace-nowrap text-muted-foreground">
 														{ticket.Assigned?.name}
@@ -236,8 +238,10 @@ export const PipelineTicket = ({
 												}).format(+ticket.value)}
 										</span>
 									</CardFooter>
+
 									<DropdownMenuContent>
 										<DropdownMenuLabel>Options</DropdownMenuLabel>
+
 										<DropdownMenuSeparator />
 										<AlertDialogTrigger>
 											<DropdownMenuItem className="flex items-center gap-2">
@@ -254,6 +258,7 @@ export const PipelineTicket = ({
 										</DropdownMenuItem>
 									</DropdownMenuContent>
 								</Card>
+
 								<AlertDialogContent>
 									<AlertDialogHeader>
 										<AlertDialogTitle>
@@ -264,6 +269,7 @@ export const PipelineTicket = ({
 											the ticket and remove it from our servers.
 										</AlertDialogDescription>
 									</AlertDialogHeader>
+									
 									<AlertDialogFooter className="flex items-center">
 										<AlertDialogCancel>Cancel</AlertDialogCancel>
 										<AlertDialogAction

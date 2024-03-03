@@ -170,7 +170,9 @@ export const TicketForm = ({
 							name="name"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Ticket Name</FormLabel>
+									<FormLabel className="text-xs font-bold">
+										Ticket Name
+									</FormLabel>
 									<FormControl>
 										<Input placeholder="Name" {...field} />
 									</FormControl>
@@ -184,7 +186,9 @@ export const TicketForm = ({
 							name="description"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Description</FormLabel>
+									<FormLabel className="text-xs font-bold">
+										Description
+									</FormLabel>
 									<FormControl>
 										<Textarea placeholder="Description" {...field} />
 									</FormControl>
@@ -198,7 +202,9 @@ export const TicketForm = ({
 							name="value"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Ticket Value</FormLabel>
+									<FormLabel className="text-xs font-bold">
+										Ticket Value
+									</FormLabel>
 									<FormControl>
 										<Input placeholder="Value" {...field} />
 									</FormControl>
@@ -233,6 +239,7 @@ export const TicketForm = ({
 									}
 								/>
 							</SelectTrigger>
+
 							<SelectContent>
 								{allTeamMembers.map((teamMember) => (
 									<SelectItem key={teamMember.id} value={teamMember.id}>
@@ -252,7 +259,8 @@ export const TicketForm = ({
 								))}
 							</SelectContent>
 						</Select>
-						<FormLabel>Customer</FormLabel>
+
+						<FormLabel className="text-xs font-bold">Customer</FormLabel>
 
 						<Popover>
 							<PopoverTrigger asChild className="w-full">
